@@ -6,5 +6,5 @@ requests
 mpld3
 streamlit
 voila
-
+pyfolio
 
