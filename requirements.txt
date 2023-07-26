@@ -7,4 +7,5 @@ mpld3
 streamlit
 voila
 pyfolio
+yfinance
 
