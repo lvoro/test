@@ -1,0 +1,10 @@
+lxml
+pandas
+numpy 
+matplotlib 
+requests 
+mpld3
+streamlit
+voila
+
+
