@@ -1,0 +1,47 @@
+import streamlit as st
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Fonction pour créer le graphe
+def plot_graph(data, x_values, y_values):
+    plt.plot(x_values, y_values)
+    plt.xlabel(data.columns[0])
+    plt.ylabel(data.columns[1])
+    plt.title("Graphique")
+    plt.grid(True)
+    st.pyplot()
+
+# Fonction principale de l'application Streamlit
+def main():
+    st.title("Graphe avec Streamlit")
+
+    # Création d'un exemple de tableau de valeurs (remplacez-le par vos données)
+    data = np.array([
+        [1, 5],
+        [2, 8],
+        [3, 6],
+        [4, 9],
+        [5, 12]
+    ])
+
+    # Affichage des données
+    st.subheader("Tableau de valeurs")
+    st.write(data)
+
+    # Création des listes de valeurs pour les axes x et y du graphe
+    x_values = data[:, 0]
+    y_values = data[:, 1]
+
+    # Tracé du graphe
+    st.subheader("Graphe")
+    plot_graph(data, x_values, y_values)
+
+    # Interface pour le zoom
+    st.subheader("Zoom sur le graphe")
+    zoom_level = st.slider("Niveau de zoom", 1, 10, 5)
+    zoomed_x_values = np.linspace(min(x_values), max(x_values), len(x_values) * zoom_level)
+    zoomed_y_values = np.interp(zoomed_x_values, x_values, y_values)
+    plot_graph(data, zoomed_x_values, zoomed_y_values)
+
+if __name__ == "__main__":
+    main()
