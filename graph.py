@@ -12,40 +12,41 @@ def generate_random_data(num_points):
     }
     return pd.DataFrame(data)
 
-# Fonction pour créer le graphe interactif avec la possibilité de zoomer
-def plot_interactive_graph(data):
+# Fonction pour créer le graphe interactif avec possibilité de zoom et pan
+def plot_interactive_graph(data, x_values, y_values):
     fig, ax = plt.subplots()
-    ax.plot(data["index"], data["random_values"])
+    ax.plot(x_values, y_values)
     ax.set(xlabel="Index", ylabel="Random Values", title="Graphique")
     ax.grid(True)
 
     # Activer l'interactivité mplcursors (afficher les valeurs au survol)
     mplcursors.cursor(hover=True)
 
-    # Fonction pour gérer le zoom sur le graphe en cliquant
-    def onclick(event):
+    # Fonction pour gérer le zoom sur le graphe en utilisant la molette de la souris
+    def on_scroll(event):
         x_min, x_max = ax.get_xlim()
         y_min, y_max = ax.get_ylim()
+
         x_range = x_max - x_min
         y_range = y_max - y_min
 
         zoom_factor = 0.1  # Ajustez ce facteur pour contrôler le niveau de zoom
 
-        if event.button == 1:  # Clic gauche pour zoomer avant
-            ax.set_xlim(event.xdata - x_range * zoom_factor, event.xdata + x_range * zoom_factor)
-            ax.set_ylim(event.ydata - y_range * zoom_factor, event.ydata + y_range * zoom_factor)
-        elif event.button == 3:  # Clic droit pour réinitialiser le zoom
-            ax.set_xlim(x_min, x_max)
-            ax.set_ylim(y_min, y_max)
+        if event.button == "up":
+            ax.set_xlim(x_min + x_range * zoom_factor, x_max - x_range * zoom_factor)
+            ax.set_ylim(y_min + y_range * zoom_factor, y_max - y_range * zoom_factor)
+        elif event.button == "down":
+            ax.set_xlim(x_min - x_range * zoom_factor, x_max + x_range * zoom_factor)
+            ax.set_ylim(y_min - y_range * zoom_factor, y_max + y_range * zoom_factor)
 
         fig.canvas.draw()
 
-    fig.canvas.mpl_connect("button_press_event", onclick)
+    fig.canvas.mpl_connect("scroll_event", on_scroll)
     st.pyplot(fig)
 
 # Fonction principale de l'application Streamlit
 def main():
-    st.title("Graphe interactif avec zoom sur clic")
+    st.title("Graphe interactif avec Streamlit")
 
     # Génération des données aléatoires
     num_points = 50
@@ -55,10 +56,15 @@ def main():
     st.subheader("Tableau de valeurs")
     st.write(data)
 
+    # Création des listes de valeurs pour les axes x et y du graphe
+    x_values = data["index"]
+    y_values = data["random_values"]
+
     # Tracé du graphe initial interactif
     st.subheader("Graphe")
-    plot_interactive_graph(data)
+    plot_interactive_graph(data, x_values, y_values)
 
 if __name__ == "__main__":
     main()
+
 
