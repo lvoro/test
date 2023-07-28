@@ -1,3 +1,4 @@
+pip
 lxml
 pandas
 numpy 
@@ -9,4 +10,5 @@ voila
 pyfolio
 yfinance
 mplcursors
+
 
