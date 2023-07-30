@@ -2,7 +2,7 @@ name: run stockage_datas_hydro.py
 
 on:
   schedule:
-    - cron: '05 13 * * *' # At 00:00 on Monday
+    - cron: '38 13 * * *' # At 00:00 on Monday
 
 jobs:
   build:
