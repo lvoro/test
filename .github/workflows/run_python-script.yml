@@ -2,7 +2,7 @@ name: run stockage_datas_hydro.py
 
 on:
   schedule:
-    - cron: '47 14 * * *' # At 00:00 on Monday
+    - cron: '05 13 * * *' # At 00:00 on Monday
 
 jobs:
   build:
@@ -24,14 +24,11 @@ jobs:
           
       - name: execute py script # run stockage_datas_hydro.py.py
       
-        run: python stockage_datas_hydro.py.py
+        run: python stockage_datas_hydro.py
           
       - name: commit files
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add -A
-          git diff-index --quiet HEAD || (git commit -a -m "updated logs" --allow-empty)
+      
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add "/test/${{ steps.run_hydro.outputs.file_name }}"
