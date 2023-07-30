@@ -5,7 +5,7 @@ name: Execute Python script daily
 
 on:
   schedule:
-    - cron: '39 13 * * *'
+    - cron: '39 16 * * *'
 
 jobs:
   build:
