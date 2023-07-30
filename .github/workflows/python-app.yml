@@ -20,7 +20,7 @@ jobs:
 
     runs-on: ubuntu-latest
       schedule: 
-    - cron: "0 11 06 * *"
+    - cron: "0 11 10 * *"
     
       steps:
     - uses: actions/checkout@v3
@@ -42,4 +42,4 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
-        run: python path/stockage_datas_hydro.py
+        run: test/stockage_datas_hydro.py
