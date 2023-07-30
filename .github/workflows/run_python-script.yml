@@ -2,7 +2,7 @@ name: Daily Hydro Script
 
 on:
   schedule:
-    - cron: "12 14 * * *"
+    - cron: "18 12 * * *"
 
 jobs:
   run_hydro_script:
