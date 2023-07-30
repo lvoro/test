@@ -1,39 +1,70 @@
-name: Daily Hydro Script
+name: run stockage_datas_hydro.py
 
 on:
   schedule:
-    - cron: "18 12 * * *"
+    - cron: '40 12 * * *' # At 00:00 on Monday
 
 jobs:
-  run_hydro_script:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: "3.11"  # Remplacez "x" par la version de Python souhaitée (par exemple, "3.7" ou "3.8")
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content to github runner
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r /test/requirements.txt  # Remplacez le chemin par le chemin correct si votre script nécessite des dépendances.
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11' # install the python version needed
+          
+      - name: install python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: execute py script # run stockage_datas_hydro.py.py
+        env:
+          SOME_SECRET: ${{ secrets.SOME_SECRET }}
+        run: python stockage_datas_hydro.py.py
+          
+      - name: commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git diff-index --quiet HEAD || (git commit -a -m "updated logs" --allow-empty)
+          
+      - name: push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main 
 
-    - name: Execute stockage_datas_hydro.py and get generated file name
-      id: run_hydro
-      run: |
-        file_name=$(python /test/stockage_datas_hydro.py)
-        echo "Generated file: $file_name"
-        echo "::set-output name=file_name::$file_name"
 
-    - name: Commit and push updated files
-      run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git add "/test/${{ steps.run_hydro.outputs.file_name }}"
-        git commit -m "Update generated file"
-        git push
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
