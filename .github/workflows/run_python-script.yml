@@ -1,3 +1,76 @@
+name: Daily Hydro Script
+
+on:
+  schedule:
+    - cron: "05 12 * * *"
+
+jobs:
+  run_hydro_script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.11"  # Remplacez "x" par la version de Python souhaitée (par exemple, "3.7" ou "3.8")
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r /test/requirements.txt  # Remplacez le chemin par le chemin correct si votre script nécessite des dépendances.
+
+    - name: Execute stockage_datas_hydro.py and get generated file name
+      id: run_hydro
+      run: |
+        file_name=$(python /test/stockage_datas_hydro.py)
+        echo "Generated file: $file_name"
+        echo "::set-output name=file_name::$file_name"
+
+    - name: Commit and push updated files
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git add "/test/${{ steps.run_hydro.outputs.file_name }}"
+        git commit -m "Update generated file"
+        git push
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
