@@ -25,6 +25,8 @@ jobs:
       - name: execute py script # run stockage_datas_hydro.py.py
       
         run: python stockage_datas_hydro.py
+      - name: Move CSV to /test directory
+        run: mv path/vers/votre/fichier.csv /test/nom_du_fichier_$(date +'%Y-%m').csv
           
       - name: commit files
         run: |
