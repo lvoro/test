@@ -10,5 +10,6 @@ voila
 pyfolio
 yfinance
 mplcursors
+datetime
 
 
