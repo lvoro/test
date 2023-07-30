@@ -14,8 +14,7 @@ now = datetime.now()
 # Formate la date au format "toto{année mois}"
 
 
-# Sauvegarder le DataFrame dans le fichier CSV
-df.to_csv(filename, index=False)
+
 
 mois_actuel = datetime.now().month
 
