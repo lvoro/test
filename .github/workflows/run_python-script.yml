@@ -32,9 +32,12 @@ jobs:
           git config --local user.name "GitHub Action"
           git add -A
           git diff-index --quiet HEAD || (git commit -a -m "updated logs" --allow-empty)
-          
-      - name: push changes
-        uses: ad-m/github-push-action@v0.6.0
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add "/test/${{ steps.run_hydro.outputs.file_name }}"
+          git commit -m "Update generated file"
+          git push
+        
        
       
 
