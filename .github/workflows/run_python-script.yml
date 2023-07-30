@@ -2,7 +2,7 @@ name: Daily Hydro Script
 
 on:
   schedule:
-    - cron: "09 14 * * *"
+    - cron: "12 14 * * *"
 
 jobs:
   run_hydro_script:
@@ -37,67 +37,3 @@ jobs:
         git commit -m "Update generated file"
         git push
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
-
-name: Execute Python script daily
-
-on:
-  schedule:
-    - cron: '39 16 * * *'
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.11  # Remplacez "x" par la version de Python que vous utilisez
-
-    - name: Install dependencies
-      run: pip install -r rep/test/requirements.txt  # Si vous avez un fichier requirements.txt pour les dépendances
-
-    
-        
-    - name: Run Python script
-      working-directory: lvoro/test
-      run: python stockage_datas_hydro.py
