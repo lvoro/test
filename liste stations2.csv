@@ -1,0 +1,33 @@
+code_station,nom_station,cours d’eau,seuil jaune bas,seuil jaune haut,seuil orange bas,seuil orange haut,seuil rouge bas
+O243402001,Boulogne,Gesse,,,,,
+O245291001,Isle en Dodon,Save,,,,,
+O246293001,Lombez,Save,2.8,3,3.5,3.7,4.3
+O252291001,Isle Jourdain,Save,5.5,5.7,6.2,6.4,7.4
+O273501001,Tirent Pontejac,Gimone,,,,,
+O274331001,Gimont,Gimone,2.8,3,4.4,4.6,6.2
+O605401001,Aubiet,Arrats,2.7,2.8,4,4.2,6
+O606401001,Mauvezin,Arrats,2.6,2.8,3.3,3.5,4.5
+O622251001,Masseube,Gers,3,3.5,4,4.5,6
+O625401001,St Jean Le Comtal,Sousson,,,,,
+O623501001,Orbessan,Gers,,,,,
+O630252001,Auch,Gers,1.2,1.4,4,4.3,6.5
+O631000101,Montestruc,Gers,,,,,
+O633251101,Fleurance,Gers,,,,,
+O633251001,Lectoure,Gers,2.4,2.5,3.55,3.6,4
+O665401001,Castera Verduzan,Auloue,1.9,2,3.1,3.2,5.3
+O650251001,Trie sur Baïse,Baïse,,,,,
+O654294001,Mirande,Baïse,3,3.3,4,4.3,5
+O661291001,SJPoutge,Baïse,3.8,4,6.5,6.6,7
+O666292001,Condom,Baïse,1.9,2.2,3,3.2,4
+O682461001,Montesquiou,Osse,,,,,
+O686461001,Vic Fezensac,Osse,3.3,3.5,4.5,5,5.5
+O286331001,Beaumont de Lgne,Gimone,1.9,2.3,2.8,3,4
+Q064402001,Mielan,Boues,3.5,3.7,4.8,5,7
+Q052253001,Tournay,Arrros,,,,,
+Q061253001,Villecomtal,Arros,3.2,3.5,4.4,4.9,6
+Q067231001,Plaisance,Arros,3,3.2,3.85,4,5.4
+Q045001001,Cahuzac sur Adour,Adour,2.3,2.5,,,
+Q074002001,Riscle,Adour,1.85,2,3.4,3.6,4.6
+Q110001002,Aire sur Adour,Adour,1.85,2,3.4,3.6,4.5
+Q204251001,Nogaro,Midou,,,,,
+Q224291001,Cazaubon,Douze,2.4,2.5,3.4,3.5,5
