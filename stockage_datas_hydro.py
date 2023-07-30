@@ -3,6 +3,20 @@ import requests
 from datetime import date
 from datetime import datetime
   # Obtenir le numéro du mois en cours
+import pandas as pd
+from datetime import datetime
+
+# Ici, nous supposons que vous avez déjà le DataFrame df
+
+# Obtenez la date actuelle
+now = datetime.now()
+
+# Formate la date au format "toto{année mois}"
+
+
+# Sauvegarder le DataFrame dans le fichier CSV
+df.to_csv(filename, index=False)
+
 mois_actuel = datetime.now().month
 
 # Étape 1: Importer le fichier liste_station2.csv et créer le DataFrame "stations"
@@ -28,7 +42,8 @@ def update_stock_hydro_csv(df, station_df):
     max_values.rename(columns={'resultat_obs': max_column_name}, inplace=True)
 
     # Charger le fichier CSV existant ou créer un nouveau s'il n'existe pas
-    file_path = (f'stock_hydro{mois_actuel}.csv')
+    file_path = (f"stock_hydro{now.strftime('%Y%m')}.csv")
+    #file_path = (f'stock_hydro{mois_actuel}.csv')
     try:
         existing_data = pd.read_csv(file_path)
         # Fusionner les nouvelles valeurs maximales avec les données existantes
@@ -46,13 +61,13 @@ if __name__ == "__main__":
     update_stock_hydro_csv(data, stations)
 
     # Afficher le DataFrame stock_hydro pour une meilleure lisibilité
-    stock_hydro_df = pd.read_csv(f'stock_hydro{mois_actuel}.csv')
+    stock_hydro_df = pd.read_csv(f"stock_hydro{now.strftime('%Y%m')}.csv")
 
 # rajouter colonne stations en concaténant avec stations et changement index      
 stock_hydro_df = pd.concat([stock_hydro_df, stations[['nom_station']]], axis=1)
 stock_hydro_df.set_index('nom_station', inplace=True)
    
-stock_hydro_df.to_csv((f'stock_hydro{mois_actuel}.csv'), index=True)
+stock_hydro_df.to_csv((f"stock_hydro{now.strftime('%Y%m')}.csv"), index=True)
 
  
 
