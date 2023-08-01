@@ -1,27 +1,44 @@
-name: Daily Python Script
+name: run stockage_datas_hydro.py
 
 on:
   schedule:
-    - cron: "30 16 * * *"
+    - cron: '0 19 * * *' # At 00:00 on Monday
 
 jobs:
-  run_script:
-    name: Run Python Script
+  build:
     runs-on: ubuntu-latest
     steps:
-    - name: Check out repository code
-      uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: "3.11" # Remplacez "x" par la version de Python que vous utilisez.
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content
 
-    - name: Run Python script
-      run: python test/stockage_datas_hydro.py
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11' # install the python version needed
 
-    - name: Move CSV to /test directory
-      run: mv fichier.csv test/nom_du_fichier_$(date +'%Y-%m-%d').csv
+      - name: install python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: execute py script # run main.py
+        env:
+          SOME_SECRET: ${{ secrets.SOME_SECRET }}
+        run: stockage_datas_hydro.py
+
+      - name: commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git diff-index --quiet HEAD || (git commit -a -m "updated logs" --allow-empty)
+
+      - name: push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main 
 
 
 
