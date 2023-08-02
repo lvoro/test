@@ -163,6 +163,6 @@ except FileNotFoundError:
     pass  # Le fichier n'existe pas encore
 
 # Sauvegardez le DataFrame mis à jour dans un fichier CSV
-df_max.to_csv(f'{mois_annee_en_cours}.csv')
-
+#df_max.to_csv(f'{mois_annee_en_cours}.csv')
+df_max.to_csv('output.csv')
 print(f"Données mises à jour pour le {colonne_date} et sauvegardées dans le fichier {mois_annee_en_cours}.csv.")
