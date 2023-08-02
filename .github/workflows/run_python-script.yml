@@ -1,8 +1,8 @@
-name: run stockage_datas_hydro.py
+name: run hydro_max_jour.py
 
 on:
   schedule:
-    - cron: '0 19 * * *' # At 00:00 on Monday
+    - cron: '0 17 * * *' # At 00:00 on Monday
 
 jobs:
   build:
@@ -25,7 +25,7 @@ jobs:
       - name: execute py script # run main.py
         env:
           SOME_SECRET: ${{ secrets.SOME_SECRET }}
-        run: stockage_datas_hydro.py
+        run: hydro_max_jour.py
 
       - name: commit files
         run: |
