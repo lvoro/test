@@ -1,44 +1,90 @@
-name: run hydro_max_jour.py
+name: Daily Python Script
 
 on:
   schedule:
-    - cron: '0 17 * * *' # At 00:00 on Monday
+    - cron: '0 18 * * *' # Execute every day at 18:00
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: checkout repo content
-        uses: actions/checkout@v2 # checkout the repository content
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.11
 
-      - name: setup python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11' # install the python version needed
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
 
-      - name: install python packages
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+    - name: Run Python script
+      run: python hydro_max_jour.py
 
-      - name: execute py script # run main.py
-        env:
-          SOME_SECRET: ${{ secrets.SOME_SECRET }}
-        run: hydro_max_jour.py
+    - name: Rename CSV file
+      run: mv output.csv "$(date +'%m-%Y').csv"
 
-      - name: commit files
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add -A
-          git diff-index --quiet HEAD || (git commit -a -m "updated logs" --allow-empty)
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "Update CSV file"
+        git push
 
-      - name: push changes
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
