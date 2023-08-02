@@ -1,0 +1,71 @@
+import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
+
+def simulate_investment(monthly_contributions, annual_returns, initial_amounts, investment_duration, tax_rates):
+    num_months = investment_duration * 12
+    monthly_returns = [(annual_return / 100) / 12 * (1 - tax_rate / 100) for annual_return, tax_rate in zip(annual_returns, tax_rates)]
+    balances = np.zeros((len(monthly_contributions), num_months))
+    balances[:, 0] = initial_amounts
+
+    for month in range(1, num_months):
+        for compartment in range(len(monthly_contributions)):
+            balances[compartment, month] = balances[compartment, month - 1] * (1 + monthly_returns[compartment]) + monthly_contributions[compartment]
+
+    return balances
+
+st.title("Simulation d'Investissement Personnalisée")
+st.write("https://pea-rentier.fr")
+num_compartments = st.number_input("Nombre de compartiments", min_value=1, max_value=4, value=4, step=1)
+
+compartments = []
+for i in range(num_compartments):
+    st.sidebar.header(f"Compartiment {i + 1}")
+    compartment_name = st.sidebar.text_input(f"Nom du compartiment {i + 1}", f"Compartiment {i + 1}")
+    monthly_contrib = st.sidebar.slider(f"Somme mensuelle investie ({compartment_name})", 0, 1000)
+    annual_return = st.sidebar.slider(f"Rendement annuel (%) ({compartment_name})", 1, 30, 5)
+    initial_amount = st.sidebar.slider(f"Somme initiale ({compartment_name})", 0, 100000)
+    tax_rate = st.sidebar.slider(f"Taux d'imposition (%) ({compartment_name})", 0, 30, 10)
+    compartments.append({
+        "name": compartment_name,
+        "monthly_contrib": monthly_contrib,
+        "annual_return": annual_return,
+        "initial_amount": initial_amount,
+        "tax_rate": tax_rate
+    })
+
+investment_duration = st.slider("Durée d'investissement (années)", 1, 40, 10)
+
+balances = simulate_investment(
+    [comp["monthly_contrib"] for comp in compartments],
+    [comp["annual_return"] for comp in compartments],
+    [comp["initial_amount"] for comp in compartments],
+    investment_duration,
+    [comp["tax_rate"] for comp in compartments]
+)
+
+fig, ax = plt.subplots(figsize=(10, 6))
+for i, comp in enumerate(compartments):
+    ax.plot(np.arange(investment_duration * 12), balances[i], label=f"{comp['name']} ({comp['annual_return']}%)")
+
+plt.xlabel("Mois")
+plt.ylabel("Solde")
+plt.title("Évolution des Compartiments d'Investissement")
+plt.legend()
+plt.grid()
+
+st.pyplot(fig)
+
+total_balance = np.sum(balances, axis=0)
+final_total = total_balance[-1]
+average_tax_rate = np.mean([comp["tax_rate"] for comp in compartments])
+average_monthly_contrib = np.sum([comp["monthly_contrib"] for comp in compartments])
+
+st.markdown(f"Capital total disponible à la fin de la durée de {investment_duration} ans: **{final_total:.2f} EUR**")
+st.markdown(f"Taux moyen d'imposition: **{average_tax_rate:.2f}%**")
+st.markdown(f"Effort d'épargne mensuel total: **{average_monthly_contrib:.2f} EUR**")
+
+# Calcul de la somme mensuelle fixe avec un taux de 2% pour les 25 prochaines années
+future_monthly_income = final_total * (0.02 / 12) / (1 - (1 + 0.02 / 12) ** (-25 * 12))
+
+st.markdown(f"Montant de la somme mensuelle fixe disponible au cours des 25 prochaines années: **{future_monthly_income:.2f} EUR/mois**")
