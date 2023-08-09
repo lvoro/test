@@ -23,7 +23,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run Python script
-      run: python hydro_max_jour.py
+      #run: python hydro_max_jour.py
 
     - name: Rename CSV file
       run: mv output.csv "$(date +'%m-%Y').csv"
